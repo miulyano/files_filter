@@ -4,14 +4,18 @@
 #### The project launch command:
 `git clone https://github.com/morecodemore/files_filter.git`
 
-// if eslint is not installed globally
+if eslint is not installed globally
+
 `npm i`
 
-// go to the folder with the code
+go to the folder with the code
+
 `cd programs`
 
-// run eslint
+run eslint
+
 `../node_modules/.bin/eslint sync.js`
 
-// start the filtering synchronously
+start the filtering synchronously
+
 `node sync.js /*from folder name (string)*/  /*to folder name (string)*/  /*delete first folder (boolean)*/`
