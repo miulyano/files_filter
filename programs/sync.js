@@ -50,6 +50,6 @@ const removeDir = (base) => {
 
 readDir(base, 0);
 
-if (settingsArgs[2]) {
+if (settingsArgs[2] === 'true') {
   removeDir(base);
 }

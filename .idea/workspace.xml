@@ -2,31 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="07d17a23-9b27-4297-9c2c-b2b04eac1099" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/fifth/adv-android.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/fifth/android.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/fifth/features-4.1c7a8d7.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/fifth/features-5.e5dbbc8.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/fifth/features-6.983e71c.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/fifth/web-design.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/fourth/second/marketing.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/fourth/second/nodejs.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/fourth/second/prof-android.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/fourth/second/react.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/third/first/features-1.20d4825.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/third/first/features-2.dd88005.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/third/first/features-3.3a49b24.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/third/first/javascript.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/third/first/markprof.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/third/first/php.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/third/first/seo.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/third/first/web-beginner.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/third/htmlcss.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/third/water-2.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/third/web-development.svg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/files/third/webprof.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/programs/sync.js" beforeDir="false" afterPath="$PROJECT_DIR$/programs/sync.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -65,8 +42,8 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="gitignore" value="41" />
-          <entry key="js" value="881" />
+          <entry key="gitignore" value="47" />
+          <entry key="js" value="914" />
           <entry key="json" value="5" />
           <entry key="md" value="245" />
         </counts>
@@ -74,9 +51,9 @@
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="JSON" value="5" />
-          <entry key="JavaScript" value="881" />
+          <entry key="JavaScript" value="914" />
           <entry key="Markdown" value="245" />
-          <entry key="PLAIN_TEXT" value="41" />
+          <entry key="PLAIN_TEXT" value="47" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.js.language.service.starts">
@@ -129,11 +106,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/programs/sync.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="11" column="37" lean-forward="true" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
+            <state relative-caret-position="308">
+              <caret line="54" column="1" lean-forward="true" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="1" />
             </state>
           </provider>
         </entry>
@@ -143,7 +120,7 @@
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
               <first_editor relative-caret-position="357">
-                <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+                <caret line="15" selection-start-line="15" selection-end-line="15" />
               </first_editor>
               <second_editor />
             </state>
@@ -159,11 +136,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/.gitignore">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="66">
-              <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+            <state relative-caret-position="99">
+              <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
             </state>
           </provider>
         </entry>
@@ -198,9 +175,9 @@
         <option value="$PROJECT_DIR$/.eslintrc" />
         <option value="$PROJECT_DIR$/sync.js" />
         <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/programs/sync.js" />
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/programs/sync.js" />
       </list>
     </option>
   </component>
@@ -305,12 +282,12 @@
       <workItem from="1533884265906" duration="415000" />
       <workItem from="1533884761480" duration="2116000" />
       <workItem from="1533936848003" duration="4209000" />
-      <workItem from="1534083121184" duration="26590000" />
+      <workItem from="1534083121184" duration="27789000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="36857000" />
+    <option name="totallyTimeSpent" value="38056000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="53" y="25" width="1920" height="1057" extended-state="0" />
@@ -328,7 +305,7 @@
       <window_info anchor="bottom" id="Docker" order="7" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="8" show_stripe_button="false" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49893504" visible="true" weight="0.25922024" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="10" sideWeight="0.49893504" visible="true" weight="0.36354056" />
       <window_info anchor="bottom" id="Event Log" order="11" sideWeight="0.50106496" side_tool="true" weight="0.25922024" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -391,13 +368,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/programs/sync.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="11" column="37" lean-forward="true" selection-start-line="11" selection-start-column="37" selection-end-line="11" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/package.json">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="158">
@@ -416,7 +386,7 @@
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
           <first_editor relative-caret-position="357">
-            <caret line="15" lean-forward="true" selection-start-line="15" selection-end-line="15" />
+            <caret line="15" selection-start-line="15" selection-end-line="15" />
           </first_editor>
           <second_editor />
         </state>
@@ -424,8 +394,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="2" column="9" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
+        <state relative-caret-position="99">
+          <caret line="3" column="9" selection-start-line="3" selection-start-column="9" selection-end-line="3" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/programs/sync.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="308">
+          <caret line="54" column="1" lean-forward="true" selection-start-line="54" selection-start-column="1" selection-end-line="54" selection-end-column="1" />
         </state>
       </provider>
     </entry>
