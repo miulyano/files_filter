@@ -5,10 +5,24 @@ const settingsArgs = process.argv.slice(2);
 const base = settingsArgs[0];
 const newBase = settingsArgs[1];
 
-fs.mkdir(newBase, function (e) {
-});
 
-const readDir = (base, level) => {
+if(newBase && newBase !== base && !fs.existsSync(newBase) && fs.existsSync(base)) {
+  fs.mkdirSync(newBase);
+} else {
+  if (!newBase) {
+    console.log('Вы не указали название папки для копирования! Пожалуйста, укажите название папки!');
+    return false;
+  } else {
+    if (!fs.existsSync(base)) {
+      console.log(`${base} не существует! Уточните запрос на копирование.`);
+      return false;
+    }
+    console.log(`${newBase} уже существует! Укажите другое название папки.`);
+    return false;
+  }
+}
+
+const readDir = (base) => {
   const files = fs.readdirSync(base);
 
   files.forEach(item => {
@@ -21,12 +35,9 @@ const readDir = (base, level) => {
       readDir(localBase);
     } else {
       if (!fs.existsSync(pathFileFilter)) {
-        fs.mkdir(pathFileFilter, function (e) {
-        });
+        fs.mkdirSync(pathFileFilter);
       }
-      fs.copyFile(localBase, path.join(pathFileFilter, item), (err) => {
-        if (err) throw err;
-      });
+      fs.copyFileSync(localBase, path.join(pathFileFilter, item));
     }
   });
 };
@@ -48,8 +59,19 @@ const removeDir = (base) => {
   }
 };
 
-readDir(base, 0);
-
-if (settingsArgs[2] === 'true') {
+if (settingsArgs[2] && settingsArgs[2] === 'true') {
+  readDir(base);
+  console.log(`${newBase} успешно создана!`);
   removeDir(base);
+  console.log(`${base} полностью удалена с вашего компьютера.`);
+} else {
+  if (settingsArgs[2] && settingsArgs[2] !== 'false') {
+    console.log('Значение параметра удаления должно быть булевым: true/false');
+    fs.rmdirSync(newBase);
+    return false;
+  }
+  if (!settingsArgs[2]) {
+    readDir(base);
+    console.log(`Файлы отфильтрованы и успешно скопированы в ${newBase}`);
+  }
 }
