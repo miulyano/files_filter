@@ -1,11 +1,7 @@
 {
+	"extends": "standard",
 	"rules": {
-		"array-bracket-newline": 0,
-		"array-element-newline": 0,
-		"id-length": 0,
-		"max-params": 0,
-		"no-magic-numbers": 0,
-		"operator-linebreak": 0,
-		"sort-keys": 0
+		"no-extra-semi": "error",
+		"semi": [2, "always"]
 	}
 }
