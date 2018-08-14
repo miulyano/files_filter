@@ -5,8 +5,7 @@ const settingsArgs = process.argv.slice(2);
 const base = settingsArgs[0];
 const newBase = settingsArgs[1];
 
-
-if(newBase && newBase !== base && !fs.existsSync(newBase) && fs.existsSync(base)) {
+if (newBase && newBase !== base && !fs.existsSync(newBase) && fs.existsSync(base)) {
   fs.mkdirSync(newBase);
 } else {
   if (!newBase) {
@@ -41,7 +40,6 @@ const readDir = (base) => {
     }
   });
 };
-
 const removeDir = (base) => {
   const files = fs.readdirSync(base);
 
