@@ -1,4 +1,5 @@
 const fs = require('fs');
+const fse = require('fs-extra');
 const path = require('path');
 const settingsArgs = process.argv.slice(2);
 
@@ -6,47 +7,10 @@ const base = settingsArgs[0];
 const newBase = settingsArgs[1];
 const delDir = settingsArgs[2];
 
-const readDir = (base) => {
-  const files = fs.readdirSync(base);
-
-  files.forEach(item => {
-    let localBase = path.join(base, item);
-    let state = fs.statSync(localBase);
-    const firstChar = item.charAt(0).toUpperCase();
-    const pathFileFilter = path.join(newBase, firstChar);
-
-    if (state.isDirectory()) {
-      readDir(localBase);
-    } else {
-      if (!fs.existsSync(pathFileFilter)) {
-        fs.mkdirSync(pathFileFilter);
-      }
-      fs.copyFileSync(localBase, path.join(pathFileFilter, item));
-    }
-  });
-};
-const removeDir = (base) => {
-  const files = fs.readdirSync(base);
-
-  if (fs.existsSync(base)) {
-    files.forEach(function (item) {
-      let localBase = path.join(base, item);
-      let state = fs.statSync(localBase);
-      if (state.isDirectory()) {
-        removeDir(localBase);
-      } else {
-        fs.unlinkSync(localBase);
-      }
-    });
-    fs.rmdirSync(base);
-  }
-};
-
-function fileFilter (from, to, del) {
-  return new Promise((resolve, reject) => {
+let files = {
+  newBase: newPath =>  new Promise((resolve, reject) => {
     if (newBase && newBase !== base && !fs.existsSync(newBase) && fs.existsSync(base)) {
-      fs.mkdirSync(newBase);
-      resolve();
+      fs.mkdir(newPath, (err) => err ? reject(err) : resolve());
     } else {
       if (!newBase) {
         console.log('Вы не указали название папки для копирования! Пожалуйста, укажите название папки!');
@@ -56,36 +20,56 @@ function fileFilter (from, to, del) {
           console.log(`${base} не существует! Уточните запрос на копирование.`);
           reject();
         }
-        if (fs.existsSync(newBase)) {
-          console.log(`${newBase} уже существует! Укажите другое название папки.`);
-          reject();
-        }
+        console.log(`${newBase} уже существует! Укажите другое название папки.`);
+        reject();
       }
     }
-  });
-}
+  }),
+  copy: (pathFile, newPath) => new Promise((resolve, reject) => {
+    fs.copyFile(pathFile, newPath, (err) => err ? reject(err) : resolve());
+  }),
+  newFileBase: fileBase => new Promise((resolve, reject) => {
+    if (!fs.existsSync(fileBase)) {
+      fse.mkdirp(fileBase, (err) => err ? reject(err) : resolve());
+    }
+  })
+};
 
-fileFilter(base, newBase, delDir)
-  .then(
-    () => {
-      if (settingsArgs[2] && settingsArgs[2] === 'true') {
-        readDir(base);
-        console.log(`${newBase} успешно создана!`);
-        removeDir(base);
-        console.log(`${base} полностью удалена с вашего компьютера.`);
-      } else {
-        if (settingsArgs[2] && settingsArgs[2] !== 'false') {
-          console.log('Значение параметра удаления должно быть булевым: true/false');
-          fs.rmdirSync(newBase);
-          return false;
+const readDir = function (dir) {
+  fs.readdir(dir, (err, list) => {
+    list.forEach(file => {
+      let innerFile = path.resolve(dir, file);
+      let firstChar = file.charAt(0).toUpperCase();
+      let pathFileFilter = path.join(newBase, firstChar);
+      fs.stat(innerFile, (err, stats) => {
+        if (stats.isDirectory()) {
+          readDir(innerFile);
+        } else {
+          files.newFileBase(pathFileFilter);
+          files.copy(innerFile, path.join(pathFileFilter, file));
         }
-        if (!settingsArgs[2]) {
-          readDir(base);
-          console.log(`Файлы отфильтрованы и успешно скопированы в ${newBase}`);
-        }
+      });
+    });
+  });
+};
+
+files
+  .newBase(newBase)
+  .then(() => {
+    if (delDir && delDir === 'true') {
+      readDir(base);
+      fse.remove(base)
+        .then(() => {
+          console.log(`${newBase} успешно создана!\n${base} полностью удалена с вашего компьютера.`);
+        });
+    } else {
+      if (delDir && delDir !== 'false') {
+        console.log('Значение параметра удаления должно быть булевым: true/false');
+        fs.rmdirSync(newBase);
       }
-    },
-    () => {
-      return false;
+      if (!delDir) {
+        readDir(base);
+      }
     }
-  );
+  })
+  .catch(() => console.error('fatal'));
