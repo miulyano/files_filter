@@ -4,7 +4,7 @@
 #### The project launch command:
     git clone https://github.com/morecodemore/files_filter.git
 
-if eslint is not installed globally
+install dependencies
    
     npm i
 
