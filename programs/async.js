@@ -1,5 +1,5 @@
 const fs = require('fs');
-const fse = require('fs-extra');
+const util = require('util');
 const path = require('path');
 const settingsArgs = process.argv.slice(2);
 
@@ -7,69 +7,116 @@ const base = settingsArgs[0];
 const newBase = settingsArgs[1];
 const delDir = settingsArgs[2];
 
-let files = {
-  newBase: newPath =>  new Promise((resolve, reject) => {
-    if (newBase && newBase !== base && !fs.existsSync(newBase) && fs.existsSync(base)) {
-      fs.mkdir(newPath, (err) => err ? reject(err) : resolve());
-    } else {
-      if (!newBase) {
-        console.log('Вы не указали название папки для копирования! Пожалуйста, укажите название папки!');
-        reject();
-      } else {
-        if (!fs.existsSync(base)) {
-          console.log(`${base} не существует! Уточните запрос на копирование.`);
-          reject();
-        }
-        console.log(`${newBase} уже существует! Укажите другое название папки.`);
-        reject();
-      }
-    }
-  }),
-  copy: (pathFile, newPath) => new Promise((resolve, reject) => {
-    fs.copyFile(pathFile, newPath, (err) => err ? reject(err) : resolve());
-  }),
-  newFileBase: fileBase => new Promise((resolve, reject) => {
-    if (!fs.existsSync(fileBase)) {
-      fse.mkdirp(fileBase, (err) => err ? reject(err) : resolve());
-    }
-  })
-};
+const addNewDir = util.promisify(fs.mkdir);
+const delBaseDir = util.promisify(fs.rmdir);
+const exsistDir = util.promisify(fs.access);
+const readDir = util.promisify(fs.readdir);
+const statDir = util.promisify(fs.stat);
+const copyFile = util.promisify(fs.copyFile);
+const delFile = util.promisify(fs.unlink);
 
-const readDir = function (dir) {
-  fs.readdir(dir, (err, list) => {
-    list.forEach(file => {
-      let innerFile = path.resolve(dir, file);
-      let firstChar = file.charAt(0).toUpperCase();
-      let pathFileFilter = path.join(newBase, firstChar);
-      fs.stat(innerFile, (err, stats) => {
-        if (stats.isDirectory()) {
-          readDir(innerFile);
-        } else {
-          files.newFileBase(pathFileFilter);
-          files.copy(innerFile, path.join(pathFileFilter, file));
-        }
-      });
-    });
+let newFileBase = (fileBase) => {
+  return new Promise((resolve, reject) => {
+    if (!fs.existsSync(fileBase)) {
+      addNewDir(fileBase)
+        .then(
+          () => resolve(),
+          () => {
+            return;
+          }
+        );
+    }
   });
 };
 
-files
-  .newBase(newBase)
-  .then(() => {
-    if (delDir && delDir === 'true') {
-      readDir(base);
-      fse.remove(base)
-        .then(() => {
-          console.log(`${newBase} успешно создана!\n${base} полностью удалена с вашего компьютера.`);
+const scanDir = function (dir) {
+  readDir(dir)
+    .then(
+      (files) => {
+        files.forEach(file => {
+          let innerFile = path.resolve(dir, file);
+          let firstChar = file.charAt(0).toUpperCase();
+          let pathFileFilter = path.join(newBase, firstChar);
+          statDir(innerFile)
+            .then((stats) => {
+              if (stats.isDirectory()) {
+                scanDir(innerFile);
+              } else {
+                newFileBase(pathFileFilter);
+                copyFile(innerFile, path.join(pathFileFilter, file))
+                  .then(
+                    () => {
+                      if (delDir === 'true') {
+                        delFile(innerFile)
+                          .then(
+                            () => {
+                              readDir(path.parse(innerFile).dir)
+                                .then(
+                                  (files) => {
+                                    // console.log(files.length);
+                                    if (!files.length) {
+                                      delBaseDir(path.parse(innerFile).dir)
+                                        .then(
+                                          () => {
+                                            readDir(base)
+                                              .then(
+                                                (files) => {
+                                                  // console.log(files.length);
+                                                  if (!files.length) {
+                                                    delBaseDir(base)
+                                                      .then(() => console.log(`${base} полностью удалена с вашего компьтера!\nВсе файлы скопированы в ${newBase}.`))
+                                                      .catch(
+                                                        () => {
+                                                          return;
+                                                        }
+                                                      );
+                                                  }
+                                                }
+                                              );
+                                          }
+                                        )
+                                        .catch(
+                                          () => {
+                                            return;
+                                          }
+                                        );
+                                    }
+                                  }
+                                );
+                            }
+                          );
+                      } else {
+                        return;
+                      }
+                    }
+                  );
+              }
+            });
         });
-    } else {
-      if (delDir && delDir !== 'false') {
-        console.log('Значение параметра удаления должно быть булевым: true/false');
+      },
+      () => {
         fs.rmdirSync(newBase);
+        console.log(`${newBase} - удалена!`);
+        console.log(`Уточните дирректорию. ${base} - не существует!`);
       }
-      if (!delDir) {
-        readDir(base);
+    );
+};
+
+exsistDir(newBase)
+  .then(
+    () => console.log(`${newBase} уже есть! Укажите другую дирректорию`),
+    () => {
+      if (delDir && delDir === 'false' || delDir && delDir === 'true' || !delDir) {
+        addNewDir(newBase)
+          .then(() => {
+            console.log(`${newBase} создана!`);
+            scanDir(base);
+          });
+      } else {
+        console.log(`${delDir} - не верный параметр! Укажите true/false или не вводите модификатор.`);
       }
     }
-  })
-  .catch(() => console.error('fatal'));
+  )
+  .catch(
+    () => console.error('fatal Error!')
+  );
